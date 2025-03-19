@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../static/estilos.css" th:href="@{/estilos.css}">
+  <title>Listagem de Votos</title>
+</head>
+<div>
+  <h1>Apuração Votos</h1>
+
+  <a href="/voto-restaurate/cadastrar-voto">Novo</a>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Restaurante</th>
+      <th>Votos</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="voto : ${votos}">
+      <td th:text="${voto.nomeRestaurante}"></td>
+      <td th:text="${voto.totalVotos}"></td>
+      <td><a th:href="@{cep-app/editar/{cep}(cep=${cep.cep})}">
+        Editar</a></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
