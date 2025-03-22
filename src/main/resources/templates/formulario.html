@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Voto</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<div class="container">
+  <h1>Cadastro de Voto</h1>
+
+  <div th:if="${erro}" class="erro">
+    <p th:text="${erro}"></p>
+  </div>
+
+  <form method="post" action="/voto-restaurante">
+    <label for="nomeFuncionario">Nome do Funcionário</label>
+    <input type="text" id="nomeFuncionario" name="nomeFuncionario" placeholder="Ex: João da Silva" required>
+
+    <label for="nomeRestaurante">Nome do Restaurante</label>
+    <input type="text" id="nomeRestaurante" name="nomeRestaurante" placeholder="Ex: McDonalds" required>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <a class="voltar" href="/voto-restaurante">← Voltar para apuração</a>
+</div>
+</body>
+</html>

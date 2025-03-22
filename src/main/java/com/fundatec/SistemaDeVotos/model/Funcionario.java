@@ -1,13 +1,14 @@
 package com.fundatec.SistemaDeVotos.model;
 
-
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 /**
- * Representa um funcionário no sistema de votação.
+ * Representa um funcionário participante do sistema de votação.
  *
- * <p>Possui informações básicas do funcionário, como ID e nome. A entidade é
- * persistida no banco de dados usando JPA.</p>
+ * <p>Cada funcionário possui um identificador único e um nome. Esta entidade
+ * é persistida no banco de dados e utilizada na associação de votos.</p>
  */
 @Entity
 @Table(name = "funcionario")
@@ -23,26 +24,25 @@ public class Funcionario {
     private Integer id;
 
     /**
-     * Nome do funcionário.
+     * Nome completo do funcionário.
      */
     @Column(name = "nome")
-    private String nome;
+    private String nomeFuncionario;
 
     /**
      * Construtor padrão.
      */
-    public Funcionario() {
-    }
+    public Funcionario() {}
 
     /**
-     * Construtor com parâmetros.
+     * Construtor com todos os campos.
      *
-     * @param id   O ID do funcionário.
-     * @param nome O nome do funcionário.
+     * @param id o identificador do funcionário
+     * @param nomeFuncionario o nome do funcionário
      */
-    public Funcionario(Integer id, String nome) {
+    public Funcionario(Integer id, String nomeFuncionario) {
         this.id = id;
-        this.nome = nome;
+        this.nomeFuncionario = nomeFuncionario;
     }
 
     public Integer getId() {
@@ -53,51 +53,28 @@ public class Funcionario {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeFuncionario() {
+        return nomeFuncionario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeFuncionario(String nomeFuncionario) {
+        this.nomeFuncionario = nomeFuncionario;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Funcionario that = (Funcionario) o;
+        return Objects.equals(id, that.id) && Objects.equals(nomeFuncionario, that.nomeFuncionario);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Funcionario other = (Funcionario) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
-        return true;
+        return Objects.hash(id, nomeFuncionario);
     }
 
     @Override
     public String toString() {
-        return String.format("\nFuncionário:\n" +
-                "-------------------------------\n" +
-                "ID:      %d\n" +
-                "Nome:    %s\n" +
-                "-------------------------------", id, nome);
+        return String.format("Funcionário [ID=%d, Nome='%s']", id, nomeFuncionario);
     }
 }

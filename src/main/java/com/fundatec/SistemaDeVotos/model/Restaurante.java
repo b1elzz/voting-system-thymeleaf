@@ -2,6 +2,14 @@ package com.fundatec.SistemaDeVotos.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
+/**
+ * Representa um restaurante que pode receber votos no sistema.
+ *
+ * <p>Um restaurante possui um identificador e um nome, sendo persistido
+ * no banco de dados para associação com os votos registrados.</p>
+ */
 @Entity
 @Table(name = "restaurante")
 public class Restaurante {
@@ -12,71 +20,47 @@ public class Restaurante {
     @Column(name = "id")
     private Integer id;
 
+    /**
+     * Nome do restaurante.
+     */
     @Column(name = "nome")
-    private String nome;
+    private String nomeRestaurante;
 
-    public Restaurante() {
-    }
+    public Restaurante() {}
 
-    public Restaurante(Integer id, String nome) {
+    /**
+     * Construtor com todos os campos.
+     *
+     * @param id               o identificador do restaurante
+     * @param nomeRestaurante o nome do restaurante
+     */
+    public Restaurante(Integer id, String nomeRestaurante) {
         this.id = id;
-        this.nome = nome;
+        this.nomeRestaurante = nomeRestaurante;
     }
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public void setId(Integer id) { this.id = id; }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getNomeRestaurante() { return nomeRestaurante; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeRestaurante(String nomeRestaurante) { this.nomeRestaurante = nomeRestaurante; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurante that = (Restaurante) o;
+        return Objects.equals(id, that.id) && Objects.equals(nomeRestaurante, that.nomeRestaurante);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Restaurante other = (Restaurante) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
-        return true;
+        return Objects.hash(id, nomeRestaurante);
     }
 
     @Override
     public String toString() {
-        return String.format("\nRestaurante:\n" +
-                "-------------------------------\n" +
-                "ID:      %d\n" +
-                "Nome:    %s\n" +
-                "-------------------------------", id, nome);
+        return String.format("Restaurante [ID=%d, Nome='%s']", id, nomeRestaurante);
     }
-
 }

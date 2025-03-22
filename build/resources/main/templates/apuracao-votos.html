@@ -1,32 +1,27 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="../static/estilos.css" th:href="@{/estilos.css}">
-  <title>Listagem de Votos</title>
+  <title>Apuração de Votos</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}">
 </head>
-<div>
-  <h1>Apuração Votos</h1>
+<body>
+<div class="container">
+  <h1>Apuração de Votos</h1>
 
-  <a href="/voto-restaurate/cadastrar-voto">Novo</a>
+  <a class="voltar" href="/voto-restaurante/formulario">+ Novo Voto</a>
 
-  <table>
+  <table class="tabela-votos">
     <thead>
     <tr>
       <th>Restaurante</th>
-      <th>Votos</th>
-      <th></th>
-      <th></th>
+      <th>Total de Votos</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="voto : ${votos}">
       <td th:text="${voto.nomeRestaurante}"></td>
       <td th:text="${voto.totalVotos}"></td>
-      <td><a th:href="@{cep-app/editar/{cep}(cep=${cep.cep})}">
-        Editar</a></td>
-
     </tr>
     </tbody>
   </table>

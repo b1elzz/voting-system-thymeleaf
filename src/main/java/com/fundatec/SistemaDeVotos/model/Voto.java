@@ -3,7 +3,14 @@ package com.fundatec.SistemaDeVotos.model;
 import jakarta.persistence.*;
 
 import java.util.Calendar;
+import java.util.Objects;
 
+/**
+ * Representa um voto registrado por um funcionário em um restaurante.
+ *
+ * <p>Cada voto é associado a uma data, um funcionário e um restaurante.
+ * A data é armazenada sem hora (apenas o dia), e a entidade é persistida no banco.</p>
+ */
 @Entity
 @Table(name = "voto")
 public class Voto {
@@ -14,99 +21,77 @@ public class Voto {
     @Column(name = "id")
     private Integer id;
 
+    /**
+     * Data em que o voto foi registrado (sem horário).
+     */
+    @Temporal(TemporalType.DATE)
     @Column(name = "data")
     private Calendar data;
 
+    /**
+     * Funcionário que realizou o voto.
+     */
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
     private Funcionario funcionario;
 
+    /**
+     * Restaurante votado.
+     */
     @ManyToOne
     @JoinColumn(name = "id_restaurante")
     private Restaurante restaurante;
 
-    public Voto() {
-    }
+    public Voto() {}
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Calendar getData() {
-        return data;
-    }
-
-    public void setData(Calendar data) {
+    /**
+     * Construtor completo.
+     *
+     * @param data        a data do voto
+     * @param funcionario o funcionário que votou
+     * @param restaurante o restaurante votado
+     */
+    public Voto(Calendar data, Funcionario funcionario, Restaurante restaurante) {
         this.data = data;
-    }
-
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
-    }
-
-
-    public Restaurante getRestaurante() {
-        return restaurante;
-    }
-
-    public void setRestaurante(Restaurante restaurante) {
         this.restaurante = restaurante;
     }
 
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
+
+    public Calendar getData() { return data; }
+
+    public void setData(Calendar data) { this.data = data; }
+
+    public Funcionario getFuncionario() { return funcionario; }
+
+    public void setFuncionario(Funcionario funcionario) { this.funcionario = funcionario; }
+
+    public Restaurante getRestaurante() { return restaurante; }
+
+    public void setRestaurante(Restaurante restaurante) { this.restaurante = restaurante; }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((data == null) ? 0 : data.hashCode());
-        result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
-        result = prime * result + ((restaurante == null) ? 0 : restaurante.hashCode());
-        return result;
+        return Objects.hash(id, data, funcionario, restaurante);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Voto)) return false;
         Voto other = (Voto) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (data == null) {
-            if (other.data != null)
-                return false;
-        } else if (!data.equals(other.data))
-            return false;
-        if (funcionario == null) {
-            if (other.funcionario != null)
-                return false;
-        } else if (!funcionario.equals(other.funcionario))
-            return false;
-        if (restaurante == null) {
-            if (other.restaurante != null)
-                return false;
-        } else if (!restaurante.equals(other.restaurante))
-            return false;
-        return true;
+        return Objects.equals(id, other.id)
+                && Objects.equals(data, other.data)
+                && Objects.equals(funcionario, other.funcionario)
+                && Objects.equals(restaurante, other.restaurante);
     }
 
     @Override
     public String toString() {
-        return "Voto: " + " ID > " + id + " Funcionario > " + funcionario + " Restaurante > " + restaurante + " Data > " + data;
+        return String.format("Voto [ID=%d, Data=%tF, Funcionário=%s, Restaurante=%s]",
+                id, data, funcionario.getNomeFuncionario(), restaurante.getNomeRestaurante());
     }
 }
