@@ -54,9 +54,7 @@ public class SistemaDeVotosController {
      * @return redirecionamento para a lista de apuração ou para o formulário com erro
      */
     @PostMapping
-    public String salvarVoto(@RequestParam String nomeFuncionario,
-                             @RequestParam String nomeRestaurante,
-                             Model model) {
+    public String salvarVoto(@RequestParam String nomeFuncionario, @RequestParam String nomeRestaurante,Model model) {
         try {
             sistemaDeVotosService.inserirVoto(nomeFuncionario, nomeRestaurante);
         } catch (FuncionarioJaVotouHojeException e) {

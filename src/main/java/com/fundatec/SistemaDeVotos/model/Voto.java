@@ -31,14 +31,14 @@ public class Voto {
     /**
      * Funcionário que realizou o voto.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_funcionario")
     private Funcionario funcionario;
 
     /**
      * Restaurante votado.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_restaurante")
     private Restaurante restaurante;
 

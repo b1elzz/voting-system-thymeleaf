@@ -49,14 +49,10 @@ public class SistemaDeVotosService {
      * @throws FuncionarioJaVotouHojeException caso o funcionário já tenha votado no dia atual
      */
     public void inserirVoto(String nomeFuncionario, String nomeRestaurante) throws FuncionarioJaVotouHojeException {
-        Funcionario funcionario = buscarOuCadastrarFuncionario(nomeFuncionario);
+        Funcionario func = buscarOuCadastrarFuncionario(nomeFuncionario);
         Restaurante restaurante = buscarOuCadastrarRestaurante(nomeRestaurante);
 
-        Calendar dataDeHoje = getDataAtualZerada();
-
-        verificarSeFuncionarioJaVotou(funcionario, dataDeHoje);
-
-        Voto novoVoto = criarVoto(funcionario, restaurante, dataDeHoje);
+        Voto novoVoto = new Voto(getDataAtualZerada(), func, restaurante);
         votoRepository.save(novoVoto);
     }
 
@@ -66,13 +62,18 @@ public class SistemaDeVotosService {
      * @param nomeFuncionario nome do funcionário
      * @return uma instância de {@link Funcionario} existente ou recém-criada
      */
-    private Funcionario buscarOuCadastrarFuncionario(String nomeFuncionario) {
-        return Optional.ofNullable(funcionarioRepository.findByNomeFuncionario(nomeFuncionario))
-                .orElseGet(() -> {
-                    Funcionario novo = new Funcionario();
-                    novo.setNomeFuncionario(nomeFuncionario);
-                    return funcionarioRepository.save(novo);
-                });
+    private Funcionario buscarOuCadastrarFuncionario(String nomeFuncionario) throws FuncionarioJaVotouHojeException {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNomeFuncionario(nomeFuncionario);
+
+        Optional<Funcionario> funcionarioExistente = Optional.ofNullable(funcionarioRepository.findByNomeFuncionario(nomeFuncionario));
+
+        if (funcionarioExistente.isPresent()) {
+            funcionario = funcionarioExistente.get();
+            verificarSeFuncionarioJaVotou(funcionario, getDataAtualZerada());
+        }
+
+        return funcionario;
     }
 
     /**
@@ -82,12 +83,16 @@ public class SistemaDeVotosService {
      * @return uma instância de {@link Restaurante} existente ou recém-criada
      */
     private Restaurante buscarOuCadastrarRestaurante(String nomeRestaurante) {
-        return Optional.ofNullable(restauranteRepository.findByNomeRestaurante(nomeRestaurante))
-                .orElseGet(() -> {
-                    Restaurante novo = new Restaurante();
-                    novo.setNomeRestaurante(nomeRestaurante);
-                    return restauranteRepository.save(novo);
-                });
+        Restaurante restaurante = new Restaurante();
+        restaurante.setNomeRestaurante(nomeRestaurante);
+
+        Optional<Restaurante> restauranteExistente = Optional.ofNullable(restauranteRepository.findByNomeRestaurante(nomeRestaurante));
+        if (restauranteExistente.isPresent()) {
+            restaurante = restauranteExistente.get();
+        }
+
+        return restaurante;
+
     }
 
     /**
@@ -106,25 +111,14 @@ public class SistemaDeVotosService {
         }
     }
 
-    /**
-     * Cria uma nova instância de {@link Voto}.
-     *
-     * @param funcionario funcionário que votou
-     * @param restaurante restaurante votado
-     * @param data        data da votação
-     * @return nova instância de voto
-     */
-    private Voto criarVoto(Funcionario funcionario, Restaurante restaurante, Calendar data) {
-        return new Voto(data, funcionario, restaurante);
-    }
 
     /**
      *
      * @return instância de {@link Calendar} representando a data de hoje
      */
     private Calendar getDataAtualZerada() {
-        Calendar cal = Calendar.getInstance();
-        return cal;
+
+        return Calendar.getInstance();
     }
 
     /**
