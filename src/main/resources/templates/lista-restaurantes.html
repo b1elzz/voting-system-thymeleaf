@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Restaurantes</title>
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<nav>
+    <div class="container">
+        <h1>Sistema de Votos</h1>
+        <div>
+            <a href="/sistema-votos">Apuração</a>
+            <a href="/funcionarios">Funcionários</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/votos/cadastrar">Novo Voto</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1>Lista de Restaurantes</h1>
+    <a href="/restaurantes/cadastrar" class="botao-acao">+ Novo Restaurante</a>
+    <div th:if="${restaurantes.isEmpty()}" class="aviso">
+        Nenhum restaurante cadastrado.
+    </div>
+    <div th:if="${!restaurantes.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="rest : ${restaurantes}">
+                <td th:text="${rest.id}"></td>
+                <td th:text="${rest.nomeRestaurante}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

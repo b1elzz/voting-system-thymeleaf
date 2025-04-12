@@ -6,25 +6,38 @@
   <link rel="stylesheet" th:href="@{/estilos.css}">
 </head>
 <body>
+<nav>
+  <div class="container">
+    <h1>Sistema de Votos</h1>
+    <div>
+      <a href="/sistema-votos">Apuração</a>
+      <a href="/funcionarios">Funcionários</a>
+      <a href="/restaurantes">Restaurantes</a>
+      <a href="/votos/cadastrar">Novo Voto</a>
+    </div>
+  </div>
+</nav>
 <div class="container">
   <h1>Apuração de Votos</h1>
-
-  <a class="voltar" href="/voto-restaurante/formulario">+ Novo Voto</a>
-
-  <table class="tabela-votos">
-    <thead>
-    <tr>
-      <th>Restaurante</th>
-      <th>Total de Votos</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="voto : ${votos}">
-      <td th:text="${voto.nomeRestaurante}"></td>
-      <td th:text="${voto.totalVotos}"></td>
-    </tr>
-    </tbody>
-  </table>
+  <div th:if="${votos.isEmpty()}" class="aviso">
+    Nenhum voto registrado hoje.
+  </div>
+  <div th:if="${!votos.isEmpty()}">
+    <table>
+      <thead>
+      <tr>
+        <th>Restaurante</th>
+        <th>Total de Votos</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="voto : ${votos}">
+        <td th:text="${voto.nomeRestaurante}"></td>
+        <td th:text="${voto.totalVotos}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 </body>
 </html>

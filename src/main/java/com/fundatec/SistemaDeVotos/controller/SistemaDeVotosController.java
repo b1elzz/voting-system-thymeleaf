@@ -1,67 +1,86 @@
 package com.fundatec.SistemaDeVotos.controller;
 
+import com.fundatec.SistemaDeVotos.dto.VotoDTO;
 import com.fundatec.SistemaDeVotos.exception.FuncionarioJaVotouHojeException;
 import com.fundatec.SistemaDeVotos.service.SistemaDeVotosService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller responsável por lidar com as requisições relacionadas à votação de restaurantes.
- *
- * <p>Gerencia a exibição do formulário de votação, o processamento do voto e a exibição
- * dos resultados da apuração.</p>
  */
 @Controller
-@RequestMapping("/voto-restaurante")
+@RequestMapping
 public class SistemaDeVotosController {
 
     @Autowired
     private SistemaDeVotosService sistemaDeVotosService;
 
     /**
-     * Exibe o formulário de votação para o usuário.
+     * Mapeia a raiz da aplicação para redirecionar para a página de apuração.
      *
-     * @return o nome da view do formulário
+     * @return redirecionamento para "/sistema-votos"
      */
-    @GetMapping("/formulario")
-    public String carregarFormulario() {
-        return "formulario";
+    @GetMapping("/")
+    public String redirectToApuracao() {
+        return "redirect:/sistema-votos";
     }
 
     /**
-     * Exibe a página com a apuração dos votos registrados no dia atual.
+     * Mapeia a página de apuração de votos.
      *
-     * @param model objeto que carrega atributos para a view
-     * @return o nome da view de apuração
+     * @param model o modelo para passar dados ao template
+     * @return o nome do template "apuracao-votos"
      */
-    @GetMapping
-    public String obterList(Model model) {
+    @GetMapping("/sistema-votos")
+    public String apuracao(Model model) {
         model.addAttribute("votos", sistemaDeVotosService.apuracaoVotos());
         return "apuracao-votos";
     }
 
     /**
-     * Processa o formulário de votação.
+     * Carrega o formulário para cadastrar um novo voto.
      *
-     * <p>Valida se o funcionário já votou no dia e, se não tiver votado, registra o voto.
-     * Caso contrário, exibe uma mensagem de erro na tela.</p>
-     *
-     * @param nomeFuncionario nome do funcionário que está votando
-     * @param nomeRestaurante nome do restaurante votado
-     * @param model objeto que carrega atributos para a view em caso de erro
-     * @return redirecionamento para a lista de apuração ou para o formulário com erro
+     * @param model o modelo para passar dados ao template
+     * @return o nome do template "formulario-voto"
      */
-    @PostMapping
-    public String salvarVoto(@RequestParam String nomeFuncionario, @RequestParam String nomeRestaurante,Model model) {
+    @GetMapping("/votos/cadastrar")
+    public String carregarFormularioVoto(Model model) {
+        model.addAttribute("votoDTO", new VotoDTO());
+        model.addAttribute("funcionarios", sistemaDeVotosService.listarFuncionarios());
+        model.addAttribute("restaurantes", sistemaDeVotosService.listarRestaurantes());
+        return "formulario-voto";
+    }
+
+    /**
+     * Processa o formulário de cadastro de voto.
+     *
+     * @param votoDTO o DTO contendo os dados do voto
+     * @param result o resultado da validação
+     * @param model o modelo para passar dados ao template
+     * @return redirecionamento para a página de apuração ou o formulário em caso de erro
+     */
+    @PostMapping("/votos/cadastrar")
+    public String salvarVoto(@Valid VotoDTO votoDTO, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("funcionarios", sistemaDeVotosService.listarFuncionarios());
+            model.addAttribute("restaurantes", sistemaDeVotosService.listarRestaurantes());
+            return "formulario-voto";
+        }
         try {
-            sistemaDeVotosService.inserirVoto(nomeFuncionario, nomeRestaurante);
+            sistemaDeVotosService.inserirVoto(votoDTO.getFuncionarioId(), votoDTO.getRestauranteId());
         } catch (FuncionarioJaVotouHojeException e) {
             model.addAttribute("erro", e.getMessage());
-            return "formulario";
+            model.addAttribute("funcionarios", sistemaDeVotosService.listarFuncionarios());
+            model.addAttribute("restaurantes", sistemaDeVotosService.listarRestaurantes());
+            return "formulario-voto";
         }
-
-        return "redirect:/voto-restaurante";
+        return "redirect:/sistema-votos";
     }
 }

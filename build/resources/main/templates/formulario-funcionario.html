@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Funcionário</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<nav>
+  <div class="container">
+    <h1>Sistema de Votos</h1>
+    <div>
+      <a href="/sistema-votos">Apuração</a>
+      <a href="/funcionarios">Funcionários</a>
+      <a href="/restaurantes">Restaurantes</a>
+      <a href="/votos/cadastrar">Novo Voto</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <h1>Cadastrar Funcionário</h1>
+  <form th:action="@{/funcionarios/cadastrar}" th:object="${funcionarioDTO}" method="post">
+    <div th:if="${#fields.hasErrors('nomeFuncionario')}" class="erro">
+      <p th:each="error : ${#fields.errors('nomeFuncionario')}" th:text="${error}"></p>
+    </div>
+    <label for="nomeFuncionario">Nome do Funcionário</label>
+    <input type="text" id="nomeFuncionario" th:field="*{nomeFuncionario}" placeholder="Ex: João da Silva" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+</div>
+</body>
+</html>

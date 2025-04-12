@@ -1,7 +1,6 @@
 package com.fundatec.SistemaDeVotos.model;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
 
 /**
@@ -14,32 +13,17 @@ import java.util.Objects;
 @Table(name = "funcionario")
 public class Funcionario {
 
-    /**
-     * Identificador único do funcionário.
-     */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "label_sequence")
-    @SequenceGenerator(name = "label_sequence", sequenceName = "label_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funcionario_sequence")
+    @SequenceGenerator(name = "funcionario_sequence", sequenceName = "funcionario_sequence", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
 
-    /**
-     * Nome completo do funcionário.
-     */
     @Column(name = "nome")
     private String nomeFuncionario;
 
-    /**
-     * Construtor padrão.
-     */
     public Funcionario() {}
 
-    /**
-     * Construtor com todos os campos.
-     *
-     * @param id o identificador do funcionário
-     * @param nomeFuncionario o nome do funcionário
-     */
     public Funcionario(Integer id, String nomeFuncionario) {
         this.id = id;
         this.nomeFuncionario = nomeFuncionario;

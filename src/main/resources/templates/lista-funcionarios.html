@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Funcionários</title>
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<nav>
+    <div class="container">
+        <h1>Sistema de Votos</h1>
+        <div>
+            <a href="/sistema-votos">Apuração</a>
+            <a href="/funcionarios">Funcionários</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/votos/cadastrar">Novo Voto</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1>Lista de Funcionários</h1>
+    <a href="/funcionarios/cadastrar" class="botao-acao">+ Novo Funcionário</a>
+    <div th:if="${funcionarios.isEmpty()}" class="aviso">
+        Nenhum funcionário cadastrado.
+    </div>
+    <div th:if="${!funcionarios.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="func : ${funcionarios}">
+                <td th:text="${func.id}"></td>
+                <td th:text="${func.nomeFuncionario}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

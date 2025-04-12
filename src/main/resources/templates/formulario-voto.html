@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Voto</title>
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<nav>
+    <div class="container">
+        <h1>Sistema de Votos</h1>
+        <div>
+            <a href="/sistema-votos">Apuração</a>
+            <a href="/funcionarios">Funcionários</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/votos/cadastrar">Novo Voto</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1>Cadastrar Voto</h1>
+    <div th:if="${erro}" class="erro">
+        <p th:text="${erro}"></p>
+    </div>
+    <form th:action="@{/votos/cadastrar}" th:object="${votoDTO}" method="post">
+        <div th:if="${#fields.hasErrors('*')}" class="erro">
+            <p th:each="error : ${#fields.errors('*')}" th:text="${error}"></p>
+        </div>
+        <label for="funcionarioId">Funcionário</label>
+        <select id="funcionarioId" th:field="*{funcionarioId}" required>
+            <option value="">Selecione um funcionário</option>
+            <option th:each="func : ${funcionarios}" th:value="${func.id}" th:text="${func.nomeFuncionario}"></option>
+        </select>
+        <label for="restauranteId">Restaurante</label>
+        <select id="restauranteId" th:field="*{restauranteId}" required>
+            <option value="">Selecione um restaurante</option>
+            <option th:each="rest : ${restaurantes}" th:value="${rest.id}" th:text="${rest.nomeRestaurante}"></option>
+        </select>
+        <button type="submit">Cadastrar Voto</button>
+    </form>
+</div>
+</body>
+</html>

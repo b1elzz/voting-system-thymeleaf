@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Restaurante</title>
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<nav>
+    <div class="container">
+        <h1>Sistema de Votos</h1>
+        <div>
+            <a href="/sistema-votos">Apuração</a>
+            <a href="/funcionarios">Funcionários</a>
+            <a href="/restaurantes">Restaurantes</a>
+            <a href="/votos/cadastrar">Novo Voto</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1>Cadastrar Restaurante</h1>
+    <form th:action="@{/restaurantes/cadastrar}" th:object="${restauranteDTO}" method="post">
+        <div th:if="${#fields.hasErrors('nomeRestaurante')}" class="erro">
+            <p th:each="error : ${#fields.errors('nomeRestaurante')}" th:text="${error}"></p>
+        </div>
+        <label for="nomeRestaurante">Nome do Restaurante</label>
+        <input type="text" id="nomeRestaurante" th:field="*{nomeRestaurante}" placeholder="Ex: McDonalds" required>
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+</body>
+</html>

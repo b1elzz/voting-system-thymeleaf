@@ -1,129 +1,139 @@
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
-    line-height: 1.6;
-    padding: 0;
-    margin: 0;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
+nav {
+  background-color: #7b0000;
+  color: #ffffff;
+  padding: 1rem;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h1 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+nav div a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav div a:hover {
+  color: #ff4a4a;
+}
 
 .container {
-    width: 90%;
-    max-width: 600px;
-    margin: 50px auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
 
-
 h1 {
-    text-align: center;
-    color: #154580;
-    margin-bottom: 25px;
-    font-size: 26px;
+  font-size: 2rem;
+  text-align: center;
+  color: #ff4a4a;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+table thead {
+  background-color: #7b0000;
+  color: #ffffff;
+}
+
+table th,
+table td {
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #444;
+}
+
+table tr:nth-child(even) {
+  background-color: #1f1f1f;
+}
+
+table tr:hover {
+  background-color: #333333;
+}
+
+button, .botao-acao {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: #ff4a4a;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+button:hover, .botao-acao:hover {
+  background-color: #ff7373;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+  background-color: #1f1f1f;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-label {
-    font-weight: bold;
-    margin-top: 15px;
-    color: #154580;
-    font-size: 15px;
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #ff7373;
 }
 
-input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-top: 5px;
-    font-size: 16px;
+form input, form select {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-size: 1rem;
 }
 
-
-button {
-    margin-top: 20px;
-    padding: 12px;
-    background-color: #154580;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.2s ease;
+form input:focus, form select:focus {
+  outline: none;
+  border-color: #ff4a4a;
 }
-
-button:hover {
-    background-color: #1d5ab8;
-}
-
-
-.voltar, .novo {
-    display: inline-block;
-    margin-top: 20px;
-    text-align: center;
-    color: #154580;
-    text-decoration: underline;
-    font-size: 15px;
-    font-weight: bold;
-}
-
 
 .erro {
-    background-color: #ffe6e6;
-    border: 1px solid #ff5c5c;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    color: #a10000;
-    font-weight: bold;
-    text-align: center;
+  background-color: #7b0000;
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
 }
 
-
-.tabela-votos {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    font-size: 16px;
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
-
-.tabela-votos th {
-    background-color: #154580;
-    color: white;
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.tabela-votos td {
-    padding: 12px;
-    border-bottom: 1px solid #ececec;
-    text-align: center;
-    background-color: #3970BE;
-    color: white;
-    font-weight: bold;
-}
-
-.tabela-votos tr:last-child td {
-    border-bottom: none;
+.aviso {
+  text-align: center;
+  padding: 1rem;
+  background-color: #333333;
+  color: #e0e0e0;
+  border-radius: 4px;
+  margin-top: 2rem;
 }

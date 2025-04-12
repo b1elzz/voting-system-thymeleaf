@@ -1,7 +1,6 @@
 package com.fundatec.SistemaDeVotos.model;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
 
 /**
@@ -15,37 +14,37 @@ import java.util.Objects;
 public class Restaurante {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "label_sequence")
-    @SequenceGenerator(name = "label_sequence", sequenceName = "label_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurante_sequence")
+    @SequenceGenerator(name = "restaurante_sequence", sequenceName = "restaurante_sequence", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
 
-    /**
-     * Nome do restaurante.
-     */
     @Column(name = "nome")
     private String nomeRestaurante;
 
     public Restaurante() {}
 
-    /**
-     * Construtor com todos os campos.
-     *
-     * @param id               o identificador do restaurante
-     * @param nomeRestaurante o nome do restaurante
-     */
     public Restaurante(Integer id, String nomeRestaurante) {
         this.id = id;
         this.nomeRestaurante = nomeRestaurante;
     }
 
-    public Integer getId() { return id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(Integer id) { this.id = id; }
 
-    public String getNomeRestaurante() { return nomeRestaurante; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public void setNomeRestaurante(String nomeRestaurante) { this.nomeRestaurante = nomeRestaurante; }
+    public String getNomeRestaurante() {
+        return nomeRestaurante;
+    }
+
+    public void setNomeRestaurante(String nomeRestaurante) {
+        this.nomeRestaurante = nomeRestaurante;
+    }
 
     @Override
     public boolean equals(Object o) {
